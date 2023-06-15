@@ -1,0 +1,41 @@
+package keluarga
+
+type KeluargaRequest struct {
+	IdFrm                  string
+	IdProvinsi             int
+	KodeProvinsi           int
+	NamaProvinsi           string
+	IdKabupaten            int
+	KodeKabupaten          int
+	NamaKabupaten          string
+	IdKecamatan            int
+	KodeKecamatan          int
+	NamaKecamatan          string
+	IdKelurahan            int
+	KodeKelurahan          int
+	NamaKelurahan          string
+	KodeRw                 string
+	NamaRw                 string
+	KodeRt                 string
+	NamaRt                 string
+	Periode                int
+	KodeKeluarga           string
+	Nik                    string
+	NamaKepalaKeluarga     string
+	NamaIstri              string
+	Baduta                 string
+	Balita                 string
+	Pus                    string
+	PusHamil               string
+	SumberAirLayakTidak    string
+	JambanLayakTidak       string
+	TerlaluMuda            string
+	TerlaluTua             string
+	TerlaluDekat           string
+	TerlaluBanyak          string
+	BukanPesertaKbModern   string
+	KesejahteraanPrioritas int
+	RisikoStunting         string
+	Latitude               string
+	Longitude              string
+}

@@ -1,0 +1,191 @@
+basePath: /v1/api/2022
+definitions:
+  keluarga.Keluarga:
+    properties:
+      baduta:
+        type: string
+      balita:
+        type: string
+      bukanPesertaKbModern:
+        type: string
+      idFrm:
+        description: IdFrm                  string `gorm:"column:id_frm"`
+        type: string
+      idKabupaten:
+        type: integer
+      idKecamatan:
+        type: integer
+      idKelurahan:
+        type: integer
+      idProvinsi:
+        type: integer
+      jambanLayakTidak:
+        type: string
+      kesejahteraanPrioritas:
+        type: integer
+      kodeKabupaten:
+        type: integer
+      kodeKecamatan:
+        type: integer
+      kodeKeluarga:
+        type: string
+      kodeKelurahan:
+        type: integer
+      kodeProvinsi:
+        type: integer
+      kodeRt:
+        type: string
+      kodeRw:
+        type: string
+      latitude:
+        type: string
+      longitude:
+        type: string
+      namaIstri:
+        type: string
+      namaKabupaten:
+        type: string
+      namaKecamatan:
+        type: string
+      namaKelurahan:
+        type: string
+      namaKepalaKeluarga:
+        type: string
+      namaProvinsi:
+        type: string
+      namaRt:
+        type: string
+      namaRw:
+        type: string
+      nik:
+        type: string
+      periode:
+        type: integer
+      pus:
+        type: string
+      pusHamil:
+        type: string
+      risikoStunting:
+        type: string
+      sumberAirLayakTidak:
+        type: string
+      terlaluBanyak:
+        type: string
+      terlaluDekat:
+        type: string
+      terlaluMuda:
+        type: string
+      terlaluTua:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: dittifdok@bkkbn.go.id
+    name: Direktorat Teknologi Informasi dan Data
+    url: https://bkkbn.go.id
+  description: Digital Service BKKBN for Integration
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://bkkbn.go.id
+  title: BKKBN Digital Service - Keluarga Beresiko Stunting
+  version: 2.1.1
+paths:
+  /keluarga:
+    get:
+      consumes:
+      - '*/*'
+      description: Get Keluarga Sasaran By Kelurahan
+      operationId: get-list-keluarga-sasaran-by-kelurahan
+      parameters:
+      - description: Province Code
+        in: query
+        name: kdprov
+        required: true
+        type: string
+      - description: Kabupaten Code
+        in: query
+        name: kdkab
+        required: true
+        type: string
+      - description: Kecamatan Code
+        in: query
+        name: kdkec
+        required: true
+        type: string
+      - description: Kelurahan Code
+        in: query
+        name: kdkel
+        required: true
+        type: string
+      - description: Page Number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Number of Keluarga Sasaran per page
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/keluarga.Keluarga'
+      summary: Get Keluarga Sasaran By Kelurahan
+      tags:
+      - Get Keluarga Sasaran By Kelurahan
+  /keluargaberesiko:
+    get:
+      consumes:
+      - '*/*'
+      description: Get Keluarga Beresiko Stunting By Kelurahan
+      operationId: get-list-keluarga-beresiko-stunting-by-kelurahan
+      parameters:
+      - description: Province Code
+        in: query
+        name: kdprov
+        required: true
+        type: string
+      - description: Kabupaten Code
+        in: query
+        name: kdkab
+        required: true
+        type: string
+      - description: Kecamatan Code
+        in: query
+        name: kdkec
+        required: true
+        type: string
+      - description: Kelurahan Code
+        in: query
+        name: kdkel
+        required: true
+        type: string
+      - description: Peringkat Kesejateraan (0-4)
+        in: query
+        name: filter2
+        type: integer
+      - description: Page Number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Number of Keluarga Beresiko Stunting per page
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/keluarga.Keluarga'
+      summary: Get Keluarga Beresiko Stunting By Kelurahan
+      tags:
+      - Get Keluarga Beresiko Stunting By Kelurahan
+swagger: "2.0"
