@@ -78,7 +78,7 @@ definitions:
       terlaluTua:
         type: string
     type: object
-host: localhost:8080
+host: gorest-2022-krs-prelist-ds-bkkbn-2022-gorest-krs.apps.ocp-dev.bkkbn.go.id
 info:
   contact:
     email: dittifdok@bkkbn.go.id
