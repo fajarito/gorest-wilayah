@@ -1,4 +1,4 @@
-module gorest-krsprelist
+module gorest-krs-wilayah
 
 go 1.20
 

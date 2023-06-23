@@ -2,15 +2,18 @@ package main
 
 import (
 	"fmt"
-	"gorest-krsprelist/handler"
-	"gorest-krsprelist/keluarga"
+	"gorest-krs-wilayah/handler"
+	"gorest-krs-wilayah/kabupaten"
+	"gorest-krs-wilayah/kecamatan"
+	"gorest-krs-wilayah/kelurahan"
+	"gorest-krs-wilayah/provinsi"
 	"log"
 	"os"
 
 	"github.com/gin-contrib/cors"
 	pagination "github.com/webstradev/gin-pagination"
 
-	_ "gorest-krsprelist/docs"
+	_ "gorest-krs-wilayah/docs"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -23,17 +26,17 @@ import (
 )
 
 // swagger embed files
-// @title BKKBN Digital Service - Keluarga Beresiko Stunting
-// @version         2.1.1
-// @description     Digital Service BKKBN for Integration
+// @title BKKBN Digital Service - Wilayah
+// @version         2.2.0
+// @description     Digital Service BKKBN for Integration - Wilayah Service
 // @termsOfService  https://bkkbn.go.id
 // @contact.name   Direktorat Teknologi Informasi dan Data
 // @contact.url    https://bkkbn.go.id
 // @contact.email  dittifdok@bkkbn.go.id
 // @license.name  Apache 2.0
 // @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
-// @host      gorest-2022-krs-prelist-ds-bkkbn-2022-gorest-krs.apps.ocp-dev.bkkbn.go.id
-// @BasePath  /v1/api/2022
+// @host      localhost:8080
+// @BasePath  /v1/api/2022/wilayah
 func main() {
 	err := godotenv.Load()
 	if err != nil {
@@ -61,15 +64,18 @@ func main() {
 		log.Fatal("DB Connection Error")
 	}
 
-	// krkRepository := krk.NewRepository(db)
-	// krkService := krk.NewService(krkRepository)
-	// krkHandler := handler.NewKrkHandler(krkService)
-	// krsRepository := krs.NewRepository(db)
-	// krsService := krs.NewService(krsRepository)
-	// krsHandler := handler.NewKrsHandler(krsService)
-	keluargaRepository := keluarga.NewRepository(db)
-	keluargaService := keluarga.NewService(keluargaRepository)
-	keluargaHandler := handler.NewKeluargaHandler(keluargaService)
+	provinsiRepository := provinsi.NewRepository(db)
+	provinsiService := provinsi.NewService(provinsiRepository)
+	provinsiHandler := handler.NewProvinsiHandler(provinsiService)
+	kabupatenRepository := kabupaten.NewRepository(db)
+	kabupatenService := kabupaten.NewService(kabupatenRepository)
+	kabupatenHandler := handler.NewKabupatenHandler(kabupatenService)
+	kecamatanRepository := kecamatan.NewRepository(db)
+	kecamatanService := kecamatan.NewService(kecamatanRepository)
+	kecamatanHandler := handler.NewKecamatanHandler(kecamatanService)
+	kelurahanRepository := kelurahan.NewRepository(db)
+	kelurahanService := kelurahan.NewService(kelurahanRepository)
+	kelurahanHandler := handler.NewKelurahanHandler(kelurahanService)
 
 	fmt.Println("==================v3==================v3==================v3==================v")
 
@@ -91,18 +97,10 @@ func main() {
 	r.Use(pagination.Default())
 
 	v3 := r.Group("/v1/api")
-	// v3.GET("/krsbykec/kdprov=:idprov/kdkab=:idkab/kdkec=:idkec", krsHandler.GetKrsByKec)
-	// v3.GET("/krsbykec", krsHandler.GetKrsByKec)
-	// v3.GET("/krsbykab", krkHandler.GetKrkByKab)
-	// v3.GET("/krsbykab", krkHandler.GetKrkByKab)
-	v3.GET("/2022/keluarga", keluargaHandler.GetKeluarga)
-	v3.GET("/2022/keluargaberesiko", keluargaHandler.GetKeluargaBeresiko)
-	// v3.GET("/krsbykab", pagination.Default(), krkHandler.GetKrkByKab, func(c *gin.Context) {
-	// 	page := c.GetInt("page")
-
-	// 	c.JSON(http.StatusOK, gin.H{"page": page})
-	// })
-	// v3.GET("/krsbykab/:page/", krkHandler.GetKrkByKab)
+	v3.GET("/2022/wilayah/showprovinsi", provinsiHandler.GetProvinsi)
+	v3.GET("/2022/wilayah/showkabupaten", kabupatenHandler.GetKabupaten)
+	v3.GET("/2022/wilayah/showkecamatan", kecamatanHandler.GetKecamatan)
+	v3.GET("/2022/wilayah/showkelurahan", kelurahanHandler.GetKelurahan)
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.Run(":8080")
 }

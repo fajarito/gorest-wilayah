@@ -25,9 +25,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/keluarga": {
+        "/showkabupaten": {
             "get": {
-                "description": "Get Keluarga Sasaran By Kelurahan",
+                "description": "Get Wilayah By Kabupaten",
                 "consumes": [
                     "*/*"
                 ],
@@ -35,36 +35,15 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Get Keluarga Sasaran By Kelurahan"
+                    "Get Wilayah By Kabupaten"
                 ],
-                "summary": "Get Keluarga Sasaran By Kelurahan",
-                "operationId": "get-list-keluarga-sasaran-by-kelurahan",
+                "summary": "Get Wilayah By Kabupaten",
+                "operationId": "get-list-wilayah-by-kabupaten",
                 "parameters": [
                     {
                         "type": "string",
                         "description": "Province Code",
                         "name": "kdprov",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Kabupaten Code",
-                        "name": "kdkab",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Kecamatan Code",
-                        "name": "kdkec",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Kelurahan Code",
-                        "name": "kdkel",
                         "in": "query",
                         "required": true
                     },
@@ -77,7 +56,7 @@ const docTemplate = `{
                     {
                         "type": "integer",
                         "default": 10,
-                        "description": "Number of Keluarga Sasaran per page",
+                        "description": "Number of Kabupaten per page",
                         "name": "pageSize",
                         "in": "query"
                     }
@@ -86,15 +65,15 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/keluarga.Keluarga"
+                            "$ref": "#/definitions/kabupaten.Kabupaten"
                         }
                     }
                 }
             }
         },
-        "/keluargaberesiko": {
+        "/showkecamatan": {
             "get": {
-                "description": "Get Keluarga Beresiko Stunting By Kelurahan",
+                "description": "Get Wilayah By Kecamatan",
                 "consumes": [
                     "*/*"
                 ],
@@ -102,10 +81,63 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Get Keluarga Beresiko Stunting By Kelurahan"
+                    "Get Wilayah By Kecamatan"
                 ],
-                "summary": "Get Keluarga Beresiko Stunting By Kelurahan",
-                "operationId": "get-list-keluarga-beresiko-stunting-by-kelurahan",
+                "summary": "Get Wilayah By Kecamatan",
+                "operationId": "get-list-wilayah-by-kecamatan",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Province Code",
+                        "name": "kdprov",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Kabupaten Code",
+                        "name": "kdkab",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page Number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Number of Kecamatan per page",
+                        "name": "pageSize",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/kecamatan.Kecamatan"
+                        }
+                    }
+                }
+            }
+        },
+        "/showkelurahan": {
+            "get": {
+                "description": "Get Wilayah Sasaran By Kelurahan",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Get Wilayah By Kelurahan"
+                ],
+                "summary": "Get Wilayah By Kelurahan",
+                "operationId": "get-list-wilayah-by-kelurahan",
                 "parameters": [
                     {
                         "type": "string",
@@ -129,19 +161,6 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
-                        "description": "Kelurahan Code",
-                        "name": "kdkel",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "Peringkat Kesejateraan (0-4)",
-                        "name": "filter2",
-                        "in": "query"
-                    },
-                    {
                         "type": "integer",
                         "description": "Page Number",
                         "name": "page",
@@ -150,7 +169,7 @@ const docTemplate = `{
                     {
                         "type": "integer",
                         "default": 10,
-                        "description": "Number of Keluarga Beresiko Stunting per page",
+                        "description": "Number of Kelurahan per page",
                         "name": "pageSize",
                         "in": "query"
                     }
@@ -159,7 +178,40 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/keluarga.Keluarga"
+                            "$ref": "#/definitions/kelurahan.Kelurahan"
+                        }
+                    }
+                }
+            }
+        },
+        "/showprovinsi": {
+            "get": {
+                "description": "Get Wilayah by Province",
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Get Wilayah by Province"
+                ],
+                "summary": "Get Wilayah by Province",
+                "operationId": "get-wilayah-by-province",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 34,
+                        "description": "Number of Province per page",
+                        "name": "pageSize",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/provinsi.Provinsi"
                         }
                     }
                 }
@@ -167,22 +219,64 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "keluarga.Keluarga": {
+        "kabupaten.Kabupaten": {
             "type": "object",
             "properties": {
-                "baduta": {
+                "idKabupaten": {
+                    "type": "integer"
+                },
+                "idProvinsi": {
+                    "type": "integer"
+                },
+                "kodeKabupaten": {
+                    "type": "integer"
+                },
+                "kodeProvinsi": {
+                    "type": "integer"
+                },
+                "namaKabupaten": {
                     "type": "string"
                 },
-                "balita": {
+                "namaProvinsi": {
+                    "type": "string"
+                }
+            }
+        },
+        "kecamatan.Kecamatan": {
+            "type": "object",
+            "properties": {
+                "idKabupaten": {
+                    "type": "integer"
+                },
+                "idKecamatan": {
+                    "type": "integer"
+                },
+                "idProvinsi": {
+                    "type": "integer"
+                },
+                "kodeKabupaten": {
+                    "type": "integer"
+                },
+                "kodeKecamatan": {
+                    "type": "integer"
+                },
+                "kodeProvinsi": {
+                    "type": "integer"
+                },
+                "namaKabupaten": {
                     "type": "string"
                 },
-                "bukanPesertaKbModern": {
+                "namaKecamatan": {
                     "type": "string"
                 },
-                "idFrm": {
-                    "description": "IdFrm                  string ` + "`" + `gorm:\"column:id_frm\"` + "`" + `",
+                "namaProvinsi": {
                     "type": "string"
-                },
+                }
+            }
+        },
+        "kelurahan.Kelurahan": {
+            "type": "object",
+            "properties": {
                 "idKabupaten": {
                     "type": "integer"
                 },
@@ -195,41 +289,17 @@ const docTemplate = `{
                 "idProvinsi": {
                     "type": "integer"
                 },
-                "jambanLayakTidak": {
-                    "type": "string"
-                },
-                "kesejahteraanPrioritas": {
-                    "type": "integer"
-                },
                 "kodeKabupaten": {
                     "type": "integer"
                 },
                 "kodeKecamatan": {
                     "type": "integer"
                 },
-                "kodeKeluarga": {
-                    "type": "string"
-                },
                 "kodeKelurahan": {
                     "type": "integer"
                 },
                 "kodeProvinsi": {
                     "type": "integer"
-                },
-                "kodeRt": {
-                    "type": "string"
-                },
-                "kodeRw": {
-                    "type": "string"
-                },
-                "latitude": {
-                    "type": "string"
-                },
-                "longitude": {
-                    "type": "string"
-                },
-                "namaIstri": {
-                    "type": "string"
                 },
                 "namaKabupaten": {
                     "type": "string"
@@ -240,46 +310,21 @@ const docTemplate = `{
                 "namaKelurahan": {
                     "type": "string"
                 },
-                "namaKepalaKeluarga": {
-                    "type": "string"
-                },
                 "namaProvinsi": {
                     "type": "string"
-                },
-                "namaRt": {
-                    "type": "string"
-                },
-                "namaRw": {
-                    "type": "string"
-                },
-                "nik": {
-                    "type": "string"
-                },
-                "periode": {
+                }
+            }
+        },
+        "provinsi.Provinsi": {
+            "type": "object",
+            "properties": {
+                "idProvinsi": {
                     "type": "integer"
                 },
-                "pus": {
-                    "type": "string"
+                "kodeProvinsi": {
+                    "type": "integer"
                 },
-                "pusHamil": {
-                    "type": "string"
-                },
-                "risikoStunting": {
-                    "type": "string"
-                },
-                "sumberAirLayakTidak": {
-                    "type": "string"
-                },
-                "terlaluBanyak": {
-                    "type": "string"
-                },
-                "terlaluDekat": {
-                    "type": "string"
-                },
-                "terlaluMuda": {
-                    "type": "string"
-                },
-                "terlaluTua": {
+                "namaProvinsi": {
                     "type": "string"
                 }
             }
@@ -289,12 +334,12 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "2.1.1",
-	Host:             "gorest-2022-krs-prelist-ds-bkkbn-2022-gorest-krs.apps.ocp-dev.bkkbn.go.id",
-	BasePath:         "/v1/api/2022",
+	Version:          "2.2.0",
+	Host:             "localhost:8080",
+	BasePath:         "/v1/api/2022/wilayah",
 	Schemes:          []string{},
-	Title:            "BKKBN Digital Service - Keluarga Beresiko Stunting",
-	Description:      "Digital Service BKKBN for Integration",
+	Title:            "BKKBN Digital Service - Wilayah",
+	Description:      "Digital Service BKKBN for Integration - Wilayah Service",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

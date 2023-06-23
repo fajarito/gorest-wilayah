@@ -1,16 +1,43 @@
-basePath: /v1/api/2022
+basePath: /v1/api/2022/wilayah
 definitions:
-  keluarga.Keluarga:
+  kabupaten.Kabupaten:
     properties:
-      baduta:
+      idKabupaten:
+        type: integer
+      idProvinsi:
+        type: integer
+      kodeKabupaten:
+        type: integer
+      kodeProvinsi:
+        type: integer
+      namaKabupaten:
         type: string
-      balita:
+      namaProvinsi:
         type: string
-      bukanPesertaKbModern:
+    type: object
+  kecamatan.Kecamatan:
+    properties:
+      idKabupaten:
+        type: integer
+      idKecamatan:
+        type: integer
+      idProvinsi:
+        type: integer
+      kodeKabupaten:
+        type: integer
+      kodeKecamatan:
+        type: integer
+      kodeProvinsi:
+        type: integer
+      namaKabupaten:
         type: string
-      idFrm:
-        description: IdFrm                  string `gorm:"column:id_frm"`
+      namaKecamatan:
         type: string
+      namaProvinsi:
+        type: string
+    type: object
+  kelurahan.Kelurahan:
+    properties:
       idKabupaten:
         type: integer
       idKecamatan:
@@ -19,85 +46,119 @@ definitions:
         type: integer
       idProvinsi:
         type: integer
-      jambanLayakTidak:
-        type: string
-      kesejahteraanPrioritas:
-        type: integer
       kodeKabupaten:
         type: integer
       kodeKecamatan:
         type: integer
-      kodeKeluarga:
-        type: string
       kodeKelurahan:
         type: integer
       kodeProvinsi:
         type: integer
-      kodeRt:
-        type: string
-      kodeRw:
-        type: string
-      latitude:
-        type: string
-      longitude:
-        type: string
-      namaIstri:
-        type: string
       namaKabupaten:
         type: string
       namaKecamatan:
         type: string
       namaKelurahan:
         type: string
-      namaKepalaKeluarga:
-        type: string
       namaProvinsi:
         type: string
-      namaRt:
-        type: string
-      namaRw:
-        type: string
-      nik:
-        type: string
-      periode:
+    type: object
+  provinsi.Provinsi:
+    properties:
+      idProvinsi:
         type: integer
-      pus:
-        type: string
-      pusHamil:
-        type: string
-      risikoStunting:
-        type: string
-      sumberAirLayakTidak:
-        type: string
-      terlaluBanyak:
-        type: string
-      terlaluDekat:
-        type: string
-      terlaluMuda:
-        type: string
-      terlaluTua:
+      kodeProvinsi:
+        type: integer
+      namaProvinsi:
         type: string
     type: object
-host: gorest-2022-krs-prelist-ds-bkkbn-2022-gorest-krs.apps.ocp-dev.bkkbn.go.id
+host: localhost:8080
 info:
   contact:
     email: dittifdok@bkkbn.go.id
     name: Direktorat Teknologi Informasi dan Data
     url: https://bkkbn.go.id
-  description: Digital Service BKKBN for Integration
+  description: Digital Service BKKBN for Integration - Wilayah Service
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: https://bkkbn.go.id
-  title: BKKBN Digital Service - Keluarga Beresiko Stunting
-  version: 2.1.1
+  title: BKKBN Digital Service - Wilayah
+  version: 2.2.0
 paths:
-  /keluarga:
+  /showkabupaten:
     get:
       consumes:
       - '*/*'
-      description: Get Keluarga Sasaran By Kelurahan
-      operationId: get-list-keluarga-sasaran-by-kelurahan
+      description: Get Wilayah By Kabupaten
+      operationId: get-list-wilayah-by-kabupaten
+      parameters:
+      - description: Province Code
+        in: query
+        name: kdprov
+        required: true
+        type: string
+      - description: Page Number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Number of Kabupaten per page
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/kabupaten.Kabupaten'
+      summary: Get Wilayah By Kabupaten
+      tags:
+      - Get Wilayah By Kabupaten
+  /showkecamatan:
+    get:
+      consumes:
+      - '*/*'
+      description: Get Wilayah By Kecamatan
+      operationId: get-list-wilayah-by-kecamatan
+      parameters:
+      - description: Province Code
+        in: query
+        name: kdprov
+        required: true
+        type: string
+      - description: Kabupaten Code
+        in: query
+        name: kdkab
+        required: true
+        type: string
+      - description: Page Number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Number of Kecamatan per page
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/kecamatan.Kecamatan'
+      summary: Get Wilayah By Kecamatan
+      tags:
+      - Get Wilayah By Kecamatan
+  /showkelurahan:
+    get:
+      consumes:
+      - '*/*'
+      description: Get Wilayah Sasaran By Kelurahan
+      operationId: get-list-wilayah-by-kelurahan
       parameters:
       - description: Province Code
         in: query
@@ -114,17 +175,12 @@ paths:
         name: kdkec
         required: true
         type: string
-      - description: Kelurahan Code
-        in: query
-        name: kdkel
-        required: true
-        type: string
       - description: Page Number
         in: query
         name: page
         type: integer
       - default: 10
-        description: Number of Keluarga Sasaran per page
+        description: Number of Kelurahan per page
         in: query
         name: pageSize
         type: integer
@@ -134,47 +190,19 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/keluarga.Keluarga'
-      summary: Get Keluarga Sasaran By Kelurahan
+            $ref: '#/definitions/kelurahan.Kelurahan'
+      summary: Get Wilayah By Kelurahan
       tags:
-      - Get Keluarga Sasaran By Kelurahan
-  /keluargaberesiko:
+      - Get Wilayah By Kelurahan
+  /showprovinsi:
     get:
       consumes:
       - '*/*'
-      description: Get Keluarga Beresiko Stunting By Kelurahan
-      operationId: get-list-keluarga-beresiko-stunting-by-kelurahan
+      description: Get Wilayah by Province
+      operationId: get-wilayah-by-province
       parameters:
-      - description: Province Code
-        in: query
-        name: kdprov
-        required: true
-        type: string
-      - description: Kabupaten Code
-        in: query
-        name: kdkab
-        required: true
-        type: string
-      - description: Kecamatan Code
-        in: query
-        name: kdkec
-        required: true
-        type: string
-      - description: Kelurahan Code
-        in: query
-        name: kdkel
-        required: true
-        type: string
-      - description: Peringkat Kesejateraan (0-4)
-        in: query
-        name: filter2
-        type: integer
-      - description: Page Number
-        in: query
-        name: page
-        type: integer
-      - default: 10
-        description: Number of Keluarga Beresiko Stunting per page
+      - default: 34
+        description: Number of Province per page
         in: query
         name: pageSize
         type: integer
@@ -184,8 +212,8 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/keluarga.Keluarga'
-      summary: Get Keluarga Beresiko Stunting By Kelurahan
+            $ref: '#/definitions/provinsi.Provinsi'
+      summary: Get Wilayah by Province
       tags:
-      - Get Keluarga Beresiko Stunting By Kelurahan
+      - Get Wilayah by Province
 swagger: "2.0"
